@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:design="http://flowable.org/design" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://flowable.org/test" design:palette="flowable-work-process-palette">
+  <process id="babourpoc" name="babourpoc" isExecutable="true" flowable:candidateStarterGroups="flowableUser">
+    <extensionElements>
+      <design:stencilid><![CDATA[BPMNDiagram]]></design:stencilid>
+      <design:creationdate><![CDATA[2024-09-30T08:47:23.190Z]]></design:creationdate>
+      <design:modificationdate><![CDATA[2024-09-30T10:43:06.251Z]]></design:modificationdate>
+    </extensionElements>
+    <userTask id="id-manual-task-approve-or-reject" name="Approve or Reject?" flowable:assignee="${initiator}" flowable:candidateGroups="legal_register_task_assignees" flowable:dueDate="P2D" flowable:formFieldValidation="false">
+      <extensionElements>
+        <flowable:task-candidates-type><![CDATA[all]]></flowable:task-candidates-type>
+        <design:stencilid><![CDATA[FormTask]]></design:stencilid>
+        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+      </extensionElements>
+    </userTask>
+    <userTask id="id-manual-task-update" name="Update" flowable:assignee="${initiator}" flowable:formFieldValidation="false" flowable:dueDate="P2D" flowable:candidateGroups="legal_register_task_assignees">
+      <extensionElements>
+        <flowable:task-candidates-type><![CDATA[all]]></flowable:task-candidates-type>
+        <design:stencilid><![CDATA[FormTask]]></design:stencilid>
+        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+      </extensionElements>
+    </userTask>
+    <exclusiveGateway id="bpmnGateway_approve_update" name="Approve Or Update" default="sf-approved">
+      <extensionElements>
+        <design:stencilid><![CDATA[Exclusive_Databased_Gateway]]></design:stencilid>
+        <design:display_ref_in_diagram><![CDATA[true]]></design:display_ref_in_diagram>
+      </extensionElements>
+    </exclusiveGateway>
+    <startEvent id="Start" flowable:initiator="initiator" flowable:formFieldValidation="false" name="Start">
+      <extensionElements>
+        <flowable:work-form-field-validation><![CDATA[false]]></flowable:work-form-field-validation>
+        <design:stencilid><![CDATA[StartNoneEvent]]></design:stencilid>
+      </extensionElements>
+    </startEvent>
+    <endEvent id="bpmnEndEvent_6" name="End">
+      <extensionElements>
+        <design:stencilid><![CDATA[EndNoneEvent]]></design:stencilid>
+      </extensionElements>
+    </endEvent>
+    <sequenceFlow id="bpmnSequenceFlow_3" sourceRef="id-manual-task-approve-or-reject" targetRef="bpmnGateway_approve_update">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="sf-update" sourceRef="bpmnGateway_approve_update" targetRef="id-manual-task-update" name="Update">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression">${nextStep == 'updated'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="bpmnSequenceFlow_2" sourceRef="Start" targetRef="id-manual-task-approve-or-reject">
+      <extensionElements>
+        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
+      </extensionElements>
+    </sequenceFlow>
+    <sequenceFlow id="sid-5cd045a6-146e-49fe-a07c-03a6d4d4845f" sourceRef="id-manual-task-update" targetRef="id-manual-task-approve-or-reject"/>
+    <sequenceFlow id="sf-approved" sourceRef="bpmnGateway_approve_update" targetRef="bpmnEndEvent_6" name="Approved"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_babourpoc">
+    <bpmndi:BPMNPlane bpmnElement="babourpoc" id="BPMNPlane_babourpoc">
+      <bpmndi:BPMNShape bpmnElement="id-manual-task-approve-or-reject" id="BPMNShape_bpmnTask_1">
+        <omgdc:Bounds height="80.0" width="100.0" x="397.0" y="236.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="id-manual-task-update" id="BPMNShape_bpmnTask_4">
+        <omgdc:Bounds height="80.0" width="100.0" x="613.0" y="9.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bpmnGateway_approve_update" id="BPMNShape_bpmnGateway_1">
+        <omgdc:Bounds height="40.0" width="40.0" x="547.0" y="256.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="18.0" width="87.0" x="520.8" y="300.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Start" id="BPMNShape_startnoneevent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="317.0" y="261.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="bpmnEndEvent_6" id="BPMNShape_bpmnEndEvent_6">
+        <omgdc:Bounds height="28.0" width="28.0" x="854.0" y="262.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="bpmnSequenceFlow_3" id="BPMNEdge_bpmnSequenceFlow_3" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="20.0" flowable:targetDockerY="20.0">
+        <omgdi:waypoint x="497.0" y="276.0"/>
+        <omgdi:waypoint x="547.0" y="276.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="bpmnSequenceFlow_2" id="BPMNEdge_bpmnSequenceFlow_2" flowable:sourceDockerX="15.0" flowable:sourceDockerY="15.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
+        <omgdi:waypoint x="347.0" y="276.0"/>
+        <omgdi:waypoint x="397.0" y="276.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sf-update" id="BPMNEdge_bpmnSequenceFlow_5" flowable:sourceDockerX="20.0" flowable:sourceDockerY="20.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
+        <omgdi:waypoint x="567.0" y="256.0"/>
+        <omgdi:waypoint x="567.0" y="206.0"/>
+        <omgdi:waypoint x="567.00006" y="49.0"/>
+        <omgdi:waypoint x="613.0" y="49.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-866012a3-e259-4dea-a01b-f4a5bd06097a" bpmnElement="sid-5cd045a6-146e-49fe-a07c-03a6d4d4845f">
+        <omgdi:waypoint x="612.99994" y="29.0"/>
+        <omgdi:waypoint x="472.0" y="29.0"/>
+        <omgdi:waypoint x="472.00003" y="236.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-3271fe73-d1d9-488b-b4c8-2e7a28cae324" bpmnElement="sf-approved">
+        <omgdi:waypoint x="587.00006" y="276.0"/>
+        <omgdi:waypoint x="853.99994" y="275.99997"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
