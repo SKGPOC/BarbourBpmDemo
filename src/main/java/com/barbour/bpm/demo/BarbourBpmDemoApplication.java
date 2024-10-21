@@ -23,7 +23,7 @@ public class BarbourBpmDemoApplication {
         SpringApplication.run(BarbourBpmDemoApplication.class, args);
     }
 
-    @Bean
+    //@Bean
     public CommandLineRunner init() {
 
         return new CommandLineRunner() {
